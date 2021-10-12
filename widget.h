@@ -6,6 +6,7 @@
 #include <QtNetwork/QTcpServer>
 #include <QtNetwork/QTcpSocket>
 
+#include "polarwidget.h"
 #include <hamlib/rotator.h>
 
 QT_BEGIN_NAMESPACE
@@ -33,6 +34,5 @@ private:
     QTcpServer *server;
     QTcpSocket *client;
     ROT *rot;        /* handle to rot (instance) */
-    int rot_in[2], rot_out[2];
 };
 #endif // WIDGET_H

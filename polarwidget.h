@@ -18,6 +18,7 @@ private:
     const qreal angularMax = 360;
     const qreal radialMin = 0;
     const qreal radialMax = 90;
+    bool rotationLock = true;
 
     QPolarChart *chart;
     QValueAxis *angularAxis;
@@ -31,6 +32,8 @@ signals:
 public slots:
     void setCrosshairPoint(float yaw, float pitch);
     void setCirclePoint(float yaw, float pitch);
+    void setRotationUnlock(bool rotationUnlock);
+    void resetRotationAngle();
 };
 
 #endif // POLARWIDGET_H

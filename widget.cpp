@@ -9,9 +9,6 @@ Widget::Widget(QWidget *parent)
 {
     ui->setupUi(this);
 
-    pipe(rot_in);
-    pipe(rot_out);
-
     rot_model_t rotModel = ROT_MODEL_ANDROIDSENSOR;
     rot = rot_init(rotModel);
 
@@ -24,6 +21,9 @@ Widget::Widget(QWidget *parent)
     server->listen(QHostAddress::Any, 4533);
 
     client = NULL;
+
+    connect(ui->pushButton_2, &QPushButton::toggled, ui->polarWidget, &PolarWidget::setRotationUnlock);
+    connect(ui->pushButton_3, &QPushButton::clicked, ui->polarWidget, &PolarWidget::resetRotationAngle);
 }
 
 Widget::~Widget()
@@ -64,6 +64,19 @@ void Widget::clientReadyRead()
         rot->caps->get_position(rot, &az, &el);
         QString writeText = QString::number(az,'f',2) + "\n" + QString::number(el,'f',2) + "\n";
         client->write(writeText.toLatin1());
+        break;
+    }
+    case 'S':
+    {
+        client->write("RPRT 0\n");
+        break;
+    }
+    case 'q':
+    {
+        disconnect(client, &QTcpSocket::readyRead, this, &Widget::clientReadyRead);
+        client->close();
+        client->deleteLater();
+        client = NULL;
         break;
     }
     default:

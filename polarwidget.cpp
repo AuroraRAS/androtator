@@ -30,6 +30,7 @@ PolarWidget::PolarWidget(QWidget *parent) : QChartView(parent)
     circle->attachAxis(radialAxis);
     circle->attachAxis(angularAxis);
 
+    chart->legend()->hide();
     this->setChart(chart);
     this->setRenderHint(QPainter::Antialiasing);
 }
@@ -50,6 +51,11 @@ void PolarWidget::setCrosshairPoint(float yaw, float pitch)
     else
         crosshair->setColor(QColor("blue"));
 
+    if(rotationLock)
+    {
+        chart->setTransformOriginPoint(this->width()/2, this->height()/2);
+        chart->setRotation(yaw * -1);
+    }
     crosshair->append(yaw, pitch * -1 + radialMax);
 }
 
@@ -64,4 +70,20 @@ void PolarWidget::setCirclePoint(float yaw, float pitch)
     pitch = pitch<radialMin ? radialMin : pitch;
 
     circle->append(yaw, pitch * -1 + radialMax);
+}
+
+void PolarWidget::setRotationUnlock(bool rotationUnlock)
+{
+    this->rotationLock = !rotationUnlock;
+
+    if(rotationUnlock)
+        chart->legend()->show();
+    else
+        chart->legend()->hide();
+}
+
+void PolarWidget::resetRotationAngle()
+{
+    chart->setTransformOriginPoint(this->width()/2, this->height()/2);
+    chart->setRotation(0);
 }
