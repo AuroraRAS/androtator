@@ -31,6 +31,7 @@ PolarWidget::PolarWidget(QWidget *parent) : QChartView(parent)
     circle->attachAxis(angularAxis);
 
     chart->legend()->hide();
+    chart->setBackgroundBrush(QBrush(QColor("transparent")));
     this->setChart(chart);
     this->setRenderHint(QPainter::Antialiasing);
 }

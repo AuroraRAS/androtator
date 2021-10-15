@@ -12,3 +12,8 @@ Androtator helps you keep your antenna pointing to the satellite. It run on Andr
 
 3. Build Androtaor using your Qt Creator.
 4. Open an issue tell me, if you get any errors.
+
+## Screenshots
+![Screenshot](./docs/Screenshot03.png)
+![Screenshot](./docs/Screenshot01.png)
+![Screenshot](./docs/Screenshot02.png)
